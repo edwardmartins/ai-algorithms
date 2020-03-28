@@ -76,16 +76,24 @@ nmap = [
     [' ', 'X', ' ', ' ', ' '],
     [' ', 'X', ' ', ' ', ' '],
     [' ', 'X', ' ', ' ', ' '],
-    [' ', ' ', ' ', ' ', ' ']]
+    [' ', 'X', ' ', ' ', ' ']]
 
 result = astar(nmap, (4, 0), ( 3, 4))
+
+print("-------------------------")
+print("Algoritmo A estrella")
+print("-------------------------")
+print("Obstaculo -> X")
+print("Camino    -> #")
+print("-------------------------")
+
 
 if(result):
     for node in result:
         for i in range(len(nmap)):
             for j in range(len(nmap[i])):
                 if(node[0] == i and node[1] == j):
-                    nmap[i][j] = 'O'
+                    nmap[i][j] = '#'
 
     for row in nmap:
         print(row)
