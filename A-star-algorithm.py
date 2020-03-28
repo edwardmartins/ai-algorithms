@@ -10,12 +10,12 @@ def get_path(current, came_from):
     data = []
     while current in came_from:
         data.append(current)
-        current = came_from[current]  # parent of 
-    data.append((0,0))
+        current = came_from[current]  # parent of
+    data.append((0, 0))
     return data[::-1]
 
 
-def astar(mapa, start, goal):
+def astar(nmap, start, goal):
 
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0),
                  (1, 1), (1, -1), (-1, 1), (-1, -1)]
@@ -38,7 +38,7 @@ def astar(mapa, start, goal):
         current = heappop(open_list)[1]
 
         if current == goal:
-            return get_path(current,came_from)
+            return get_path(current, came_from)
 
         # add it to the closed list
         closed_list.add(current)
@@ -49,9 +49,9 @@ def astar(mapa, start, goal):
             # neighbour "g value" is current g + distance to neighbor
             temporal_g = g_values[current] + heuristic(current, neighbor)
 
-            if 0 <= neighbor[0] < len(mapa):
-                if 0 <= neighbor[1] < len(mapa[0]):
-                    if mapa[neighbor[0]][neighbor[1]] == 1:
+            if 0 <= neighbor[0] < len(nmap):
+                if 0 <= neighbor[1] < len(nmap[0]):
+                    if nmap[neighbor[0]][neighbor[1]] == '=':
                         continue  # unwalkable terrain
                 else:
                     # outside of map
@@ -71,12 +71,25 @@ def astar(mapa, start, goal):
     return False
 
 
-mapa = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0]]
+nmap = [
+    ['O', 'O', 'O', 'O', 'O', 'O'],
+    ['O', 'O', 'O', 'O', 'O', 'O'],
+    ['=', '=', '=', '=', '=', 'O'],
+    ['O', 'O', 'O', 'O', 'O', 'O'],
+    ['=', '=', '=', '=', '=', 'O'],
+    ['O', 'O', 'O', 'O', 'O', 'O']]
 
-print(astar(mapa, (0, 0), (4, 4)))
+result = astar(nmap, (0, 0), (5, 0))
+
+if(result):
+    for node in result:
+        for i in range(len(nmap)):
+            for j in range(len(nmap[i])):
+                if(node[0] == i and node[1] == j):
+                    nmap[i][j] = 'X'
+
+    for row in nmap:
+        print(row)
+else:
+    print("Impossible to reach goal")
+
