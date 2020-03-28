@@ -6,12 +6,12 @@ def heuristic(x, y):
     return sqrt((x[0]-y[0])**2 + (x[1]-y[1])**2)
 
 
-def get_path(current, came_from):
+def get_path(start, current, came_from):
     data = []
     while current in came_from:
         data.append(current)
         current = came_from[current]  # parent of
-    data.append((0, 0))
+    data.append(start)
     return data[::-1]
 
 
@@ -38,7 +38,7 @@ def astar(nmap, start, goal):
         current = heappop(open_list)[1]
 
         if current == goal:
-            return get_path(current, came_from)
+            return get_path(start, current, came_from)
 
         # add it to the closed list
         closed_list.add(current)
@@ -51,7 +51,7 @@ def astar(nmap, start, goal):
 
             if 0 <= neighbor[0] < len(nmap):
                 if 0 <= neighbor[1] < len(nmap[0]):
-                    if nmap[neighbor[0]][neighbor[1]] == '=':
+                    if nmap[neighbor[0]][neighbor[1]] == 'X':
                         continue  # unwalkable terrain
                 else:
                     # outside of map
@@ -72,24 +72,22 @@ def astar(nmap, start, goal):
 
 
 nmap = [
-    ['O', 'O', 'O', 'O', 'O', 'O'],
-    ['O', 'O', 'O', 'O', 'O', 'O'],
-    ['=', '=', '=', '=', '=', 'O'],
-    ['O', 'O', 'O', 'O', 'O', 'O'],
-    ['=', '=', '=', '=', '=', 'O'],
-    ['O', 'O', 'O', 'O', 'O', 'O']]
+    ['X', ' ', ' ', ' ', ' '],
+    [' ', 'X', ' ', ' ', ' '],
+    [' ', 'X', ' ', ' ', ' '],
+    [' ', 'X', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ']]
 
-result = astar(nmap, (0, 0), (5, 0))
+result = astar(nmap, (4, 0), ( 3, 4))
 
 if(result):
     for node in result:
         for i in range(len(nmap)):
             for j in range(len(nmap[i])):
                 if(node[0] == i and node[1] == j):
-                    nmap[i][j] = 'X'
+                    nmap[i][j] = 'O'
 
     for row in nmap:
         print(row)
 else:
     print("Impossible to reach goal")
-
