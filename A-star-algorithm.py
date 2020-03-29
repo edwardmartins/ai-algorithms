@@ -10,7 +10,7 @@ def get_path(start, current, came_from):
     data = []
     while current in came_from:
         data.append(current)
-        current = came_from[current]  # parent of
+        current = came_from[current]
     data.append(start)
     return data[::-1]
 
@@ -45,7 +45,6 @@ def astar(nmap, start, goal):
         # expand it
         for x, y in neighbors:
             neighbor = current[0] + x, current[1] + y
-            # neighbour "g value" is current g + distance to neighbor
             temporal_g = g_values[current] + heuristic(current, neighbor)
 
             if 0 <= neighbor[0] < len(nmap):
@@ -59,11 +58,13 @@ def astar(nmap, start, goal):
                 # outside of map
                 continue
 
+            # skip if neighbour is already in the closed list
             if neighbor in closed_list and temporal_g >= g_values.get(neighbor, 0):
                 continue
 
+            # update "g value" or insert new node in the open list
             if temporal_g < g_values.get(neighbor, 0) or neighbor not in [i[1] for i in open_list]:
-                came_from[neighbor] = current  # update parent
+                came_from[neighbor] = current  
                 g_values[neighbor] = temporal_g
                 f_values[neighbor] = temporal_g + heuristic(neighbor, goal)
                 heappush(open_list, (f_values[neighbor], neighbor))
@@ -98,4 +99,5 @@ if __name__ == "__main__":
             print(row)
     else:
         print("Impossible to reach goal")
+
 
