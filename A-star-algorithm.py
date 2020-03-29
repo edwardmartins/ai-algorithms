@@ -4,12 +4,11 @@ from heapq import *
 def heuristic(x, y):
     return sqrt((x[0]-y[0])**2 + (x[1]-y[1])**2)
 
-def get_path(start, current, came_from):
+def get_path(current, came_from):
     data = []
     while current in came_from:
         data.append(current)
         current = came_from[current]
-    data.append(start)
     return data[::-1]
 
 def astar(nmap, start, goal):
@@ -34,7 +33,7 @@ def astar(nmap, start, goal):
         current = heappop(open_list)[1]
 
         if current == goal:
-            return get_path(start, current, came_from)
+            return get_path(current, came_from)
 
         # add it to the closed list
         closed_list.add(current)
@@ -73,8 +72,11 @@ if __name__ == "__main__":
         [' ', 'X', ' ', ' ', ' '],
         [' ', 'X', ' ', ' ', ' '],
         [' ', 'X', ' ', ' ', ' ']]
+    
+    start = (4,0)
+    goal = (3,4)
 
-    result = astar(nmap, (4, 0), (3, 4))
+    result = astar(nmap, start, goal)
 
     print("-------------------------")
     print("A star algorithm")
@@ -83,8 +85,11 @@ if __name__ == "__main__":
     print("Path     -> #")
     print("-------------------------")
 
+    nmap[start[0]][start[1]] = "I"
+    nmap[goal[0]][goal[1]] = "F"
+
     if(result):
-        for node in result:
+        for node in result[:-1]:
             for i in range(len(nmap)):
                 for j in range(len(nmap[i])):
                     if(node[0] == i and node[1] == j):
@@ -94,6 +99,7 @@ if __name__ == "__main__":
             print(row)
     else:
         print("Impossible to reach goal")
+
 
 
 
