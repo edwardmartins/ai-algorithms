@@ -70,32 +70,35 @@ def astar(nmap, start, goal):
                 heappush(open_list, (f_values[neighbor], neighbor))
     return False
 
+if __name__ == "__main__":
+    nmap = [
+        ['X', ' ', ' ', ' ', ' '],
+        [' ', 'X', ' ', ' ', ' '],
+        [' ', 'X', ' ', ' ', ' '],
+        [' ', 'X', ' ', ' ', ' '],
+        [' ', 'X', ' ', ' ', ' ']]
 
-nmap = [
-    ['X', ' ', ' ', ' ', ' '],
-    [' ', 'X', ' ', ' ', ' '],
-    [' ', 'X', ' ', ' ', ' '],
-    [' ', 'X', ' ', ' ', ' '],
-    [' ', 'X', ' ', ' ', ' ']]
+    result = astar(nmap, (4, 0), ( 3, 4))
 
-result = astar(nmap, (4, 0), ( 3, 4))
-
-print("-------------------------")
-print("Algoritmo A estrella")
-print("-------------------------")
-print("Obstaculo -> X")
-print("Camino    -> #")
-print("-------------------------")
+    print("-------------------------")
+    print("Algoritmo A estrella")
+    print("-------------------------")
+    print("Obstaculo -> X")
+    print("Camino    -> #")
+    print("-------------------------")
 
 
-if(result):
-    for node in result:
-        for i in range(len(nmap)):
-            for j in range(len(nmap[i])):
-                if(node[0] == i and node[1] == j):
-                    nmap[i][j] = '#'
+    if(result):
+        for node in result:
+            for i in range(len(nmap)):
+                for j in range(len(nmap[i])):
+                    if(node[0] == i and node[1] == j):
+                        nmap[i][j] = '#'
 
-    for row in nmap:
-        print(row)
-else:
-    print("Impossible to reach goal")
+        for row in nmap:
+            print(row)
+    else:
+        print("Impossible to reach goal")
+
+
+
