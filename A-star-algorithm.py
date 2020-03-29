@@ -48,11 +48,9 @@ def astar(nmap, start, goal):
                 if 0 <= neighbor[1] < len(nmap[0]):
                     if nmap[neighbor[0]][neighbor[1]] == 'X':
                         continue  # unwalkable terrain
-                else:
-                    # outside of map
+                else: # outside of map
                     continue
-            else:
-                # outside of map
+            else: # outside of map
                 continue
 
             # skip if node is already in the closed list
@@ -79,10 +77,10 @@ if __name__ == "__main__":
     result = astar(nmap, (4, 0), (3, 4))
 
     print("-------------------------")
-    print("Algoritmo A estrella")
+    print("A star algorithm")
     print("-------------------------")
-    print("Obstaculo -> X")
-    print("Camino    -> #")
+    print("Obstacle -> X")
+    print("Path     -> #")
     print("-------------------------")
 
     if(result):
@@ -96,5 +94,6 @@ if __name__ == "__main__":
             print(row)
     else:
         print("Impossible to reach goal")
+
 
 
