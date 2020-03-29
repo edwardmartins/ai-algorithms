@@ -67,9 +67,9 @@ def astar(nmap, start, goal):
 
 if __name__ == "__main__":
     nmap = [
-        ['X', ' ', ' ', ' ', ' '],
+        ['X', 'X', ' ', ' ', ' '],
         [' ', 'X', ' ', ' ', ' '],
-        [' ', 'X', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' '],
         [' ', 'X', ' ', ' ', ' '],
         [' ', 'X', ' ', ' ', ' ']]
     
@@ -85,20 +85,24 @@ if __name__ == "__main__":
     print("Path     -> #")
     print("-------------------------")
 
+    # put initial y final node on the map
     nmap[start[0]][start[1]] = "I"
     nmap[goal[0]][goal[1]] = "F"
 
+    # put result on the map
     if(result):
         for node in result[:-1]:
             for i in range(len(nmap)):
                 for j in range(len(nmap[i])):
                     if(node[0] == i and node[1] == j):
                         nmap[i][j] = '#'
-
-        for row in nmap:
-            print(row)
     else:
         print("Impossible to reach goal")
+        print("-------------------------")
+
+    # print result
+    for row in nmap:
+            print(row)
 
 
 
