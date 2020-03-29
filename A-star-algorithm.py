@@ -1,10 +1,8 @@
 from math import *
 from heapq import *
 
-
 def heuristic(x, y):
     return sqrt((x[0]-y[0])**2 + (x[1]-y[1])**2)
-
 
 def get_path(start, current, came_from):
     data = []
@@ -14,16 +12,15 @@ def get_path(start, current, came_from):
     data.append(start)
     return data[::-1]
 
-
 def astar(nmap, start, goal):
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0),
                  (1, 1), (1, -1), (-1, 1), (-1, -1)]
 
-    open_list = []  # f value, node
+    open_list = []  # f-value, node
     closed_list = set()  # node
     came_from = {}  # node, parent
-    g_values = {}  # node, g value
-    f_values = {}  # node, f value
+    g_values = {}  # node, g-value
+    f_values = {}  # node, f-value
 
     # initial node to the open list
     g_values = {start: 0}
@@ -58,11 +55,11 @@ def astar(nmap, start, goal):
                 # outside of map
                 continue
 
-            # skip if neighbour is already in the closed list
+            # skip if node is already in the closed list
             if neighbor in closed_list and temporal_g >= g_values.get(neighbor, 0):
                 continue
 
-            # update "g value" or insert new node in the open list
+            # update node or insert new node in the open list
             if temporal_g < g_values.get(neighbor, 0) or neighbor not in [i[1] for i in open_list]:
                 came_from[neighbor] = current  
                 g_values[neighbor] = temporal_g
