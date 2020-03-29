@@ -16,7 +16,6 @@ def get_path(start, current, came_from):
 
 
 def astar(nmap, start, goal):
-
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0),
                  (1, 1), (1, -1), (-1, 1), (-1, -1)]
 
@@ -70,6 +69,7 @@ def astar(nmap, start, goal):
                 heappush(open_list, (f_values[neighbor], neighbor))
     return False
 
+
 if __name__ == "__main__":
     nmap = [
         ['X', ' ', ' ', ' ', ' '],
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         [' ', 'X', ' ', ' ', ' '],
         [' ', 'X', ' ', ' ', ' ']]
 
-    result = astar(nmap, (4, 0), ( 3, 4))
+    result = astar(nmap, (4, 0), (3, 4))
 
     print("-------------------------")
     print("Algoritmo A estrella")
@@ -86,7 +86,6 @@ if __name__ == "__main__":
     print("Obstaculo -> X")
     print("Camino    -> #")
     print("-------------------------")
-
 
     if(result):
         for node in result:
@@ -99,6 +98,4 @@ if __name__ == "__main__":
             print(row)
     else:
         print("Impossible to reach goal")
-
-
 
