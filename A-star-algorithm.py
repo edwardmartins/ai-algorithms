@@ -18,13 +18,13 @@ def astar(nmap, start, goal):
     open_list = []  # f-value, node
     closed_list = set()  # node
     came_from = {}  # node, parent
-    g_values = {}  # node, g-value
-    f_values = {}  # node, f-value
+    g_value = {}  # node, g-value
+    f_value = {}  # node, f-value
 
     # initial node to the open list
-    g_values = {start: 0}
-    f_values = {start: heuristic(start, goal)}
-    heappush(open_list, (f_values[start], start))
+    g_value = {start: 0}
+    f_value = {start: heuristic(start, goal)}
+    heappush(open_list, (f_value[start], start))
 
     # while there is nodes in the open list keep searching
     while open_list:
@@ -41,7 +41,7 @@ def astar(nmap, start, goal):
         # expand it
         for x, y in neighbors:
             neighbor = current[0] + x, current[1] + y
-            temporal_g = g_values[current] + heuristic(current, neighbor)
+            temporal_g = g_value[current] + heuristic(current, neighbor)
 
             if 0 <= neighbor[0] < len(nmap):
                 if 0 <= neighbor[1] < len(nmap[0]):
@@ -53,15 +53,15 @@ def astar(nmap, start, goal):
                 continue
 
             # skip if node is already in the closed list
-            if neighbor in closed_list and temporal_g >= g_values.get(neighbor, 0):
+            if neighbor in closed_list and temporal_g >= g_value.get(neighbor, 0):
                 continue
 
             # update node or insert new node in the open list
-            if temporal_g < g_values.get(neighbor, 0) or neighbor not in [i[1] for i in open_list]:
+            if temporal_g < g_value.get(neighbor, 0) or neighbor not in [i[1] for i in open_list]:
                 came_from[neighbor] = current  
-                g_values[neighbor] = temporal_g
-                f_values[neighbor] = temporal_g + heuristic(neighbor, goal)
-                heappush(open_list, (f_values[neighbor], neighbor))
+                g_value[neighbor] = temporal_g
+                f_value[neighbor] = temporal_g + heuristic(neighbor, goal)
+                heappush(open_list, (f_value[neighbor], neighbor))
     return False
 
 
