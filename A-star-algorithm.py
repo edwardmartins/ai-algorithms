@@ -1,5 +1,5 @@
-from math import *
-from heapq import *
+from math import sqrt
+from heapq import heappush, heappop
 
 def heuristic(x, y):
     return sqrt((x[0]-y[0])**2 + (x[1]-y[1])**2)
@@ -52,7 +52,7 @@ def astar(nmap, start, goal):
             else: # outside of map
                 continue
 
-            # skip if node is already in the closed list
+            # skip if node is already in the closed list and its value is better
             if neighbor in closed_list and temporal_g >= g_value.get(neighbor, 0):
                 continue
 
