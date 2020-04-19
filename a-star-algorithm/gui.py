@@ -1,4 +1,3 @@
-from numpy import transpose
 from tkinter import *
 from a_star_algorithm import *
 
@@ -39,9 +38,6 @@ if result:
     for x, y in result[:-1]:
         cell_map[x][y] = 4
 
-# Transpose map to draw it right
-cell_map = transpose(cell_map)
-
 # Cell
 class Cell:
     def __init__(self, x, y, value):
@@ -54,8 +50,9 @@ class Cell:
         top_left_y = y * CELL_SIZE
         bottom_rigt_x = top_left_x + CELL_SIZE
         bottom_rigt_y = top_left_y + CELL_SIZE
-        grid.create_rectangle(top_left_x, top_left_y, bottom_rigt_x,
-                              bottom_rigt_y, fill=colors[self.value], width=2)
+        grid.create_rectangle(top_left_y, top_left_x, bottom_rigt_y,
+                              bottom_rigt_x, fill=colors[self.value], width=2)
+
 
 # Creates the main window
 main_window = Tk()
