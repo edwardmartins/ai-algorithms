@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-from a_star_algorithm import *
+import astar as ast
 import numpy as np
 
 # DefaultS sizeS
@@ -20,14 +20,13 @@ colors = {
 with open('matrix.txt', 'r') as f:
     my_matrix = [[int(num) for num in line.split(',')] for line in f]
     
-
 # Find initial and final node on the map
 cell_map = np.array(my_matrix)
 start = np.where(cell_map == 2)
 goal = np.where(cell_map == 3)
 
 # Put result on the map
-result = astar(cell_map, (int(start[0]), int(start[1])), 
+result = ast.astar(cell_map, (int(start[0]), int(start[1])), 
                          (int(goal[0]), int(goal[1])))
 
 if result:
