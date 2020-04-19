@@ -57,7 +57,6 @@ class Cell:
         grid.create_rectangle(top_left_x, top_left_y, bottom_rigt_x,
                               bottom_rigt_y, fill=colors[self.value], width=2)
 
-
 # Creates the main window
 main_window = Tk()
 main_window.title('A star algorithm')
