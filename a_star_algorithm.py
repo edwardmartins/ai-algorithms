@@ -1,8 +1,10 @@
 from math import sqrt
 from heapq import heappush, heappop
 
+
 def heuristic(x, y):
     return sqrt((x[0]-y[0])**2 + (x[1]-y[1])**2)
+
 
 def get_path(current, came_from):
     data = []
@@ -10,6 +12,7 @@ def get_path(current, came_from):
         data.append(current)
         current = came_from[current]
     return data[::-1]
+
 
 def astar(nmap, start, goal):
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0),
@@ -45,11 +48,11 @@ def astar(nmap, start, goal):
 
             if 0 <= neighbor[0] < len(nmap):
                 if 0 <= neighbor[1] < len(nmap[0]):
-                    if nmap[neighbor[0]][neighbor[1]] == 'X':
+                    if nmap[neighbor[0]][neighbor[1]] == 1:
                         continue  # unwalkable terrain
-                else: # outside of map
+                else:  # outside of map
                     continue
-            else: # outside of map
+            else:  # outside of map
                 continue
 
             # skip if node is already in the closed list and its value is better
@@ -58,52 +61,9 @@ def astar(nmap, start, goal):
 
             # update node or insert new node in the open list
             if temporal_g < g_value.get(neighbor, 0) or neighbor not in [i[1] for i in open_list]:
-                came_from[neighbor] = current  
+                came_from[neighbor] = current
                 g_value[neighbor] = temporal_g
                 f_value[neighbor] = temporal_g + heuristic(neighbor, goal)
                 heappush(open_list, (f_value[neighbor], neighbor))
     return False
-
-
-if __name__ == "__main__":
-    nmap = [
-        ['X', ' ', ' ', ' ', ' '],
-        [' ', 'X', ' ', ' ', ' '],
-        [' ', 'X', ' ', ' ', ' '],
-        [' ', 'X', ' ', ' ', ' '],
-        [' ', 'X', ' ', ' ', ' ']]
-    
-    start = (4,0)
-    goal = (3,4)
-
-    result = astar(nmap, start, goal)
-
-    print("-------------------------")
-    print("A star algorithm")
-    print("-------------------------")
-    print("Obstacle -> X")
-    print("Path     -> #")
-    print("-------------------------")
-
-    # put initial y final node on the map
-    nmap[start[0]][start[1]] = "I"
-    nmap[goal[0]][goal[1]] = "F"
-
-    # put result on the map
-    if(result):
-        for node in result[:-1]:
-            for i in range(len(nmap)):
-                for j in range(len(nmap[i])):
-                    if(node[0] == i and node[1] == j):
-                        nmap[i][j] = '#'
-    else:
-        print("Impossible to reach goal")
-        print("-------------------------")
-
-    # print result
-    for row in nmap:
-            print(row)
-
-
-
 
