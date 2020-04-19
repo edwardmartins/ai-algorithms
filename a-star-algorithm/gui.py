@@ -1,9 +1,10 @@
 from tkinter import *
+from tkinter import messagebox
 from a_star_algorithm import *
 
 # DefaultS sizeS
 CELL_SIZE = 60
-GRID_SIZE = 500
+GRID_SIZE = 700
 
 # Colors
 colors = {
@@ -17,17 +18,15 @@ colors = {
 # Map
 cell_map = [
     [1, 0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 0, 0],
-    [0, 1, 1, 1, 0, 0],
-    [0, 1, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0],
+    [0, 1, 0, 0, 0, 0],
     [0, 1, 0, 0, 0, 0],
 ]
 
-# Calling a star algorithm
-start = (4, 0)
-goal = (4, 2)
-
 # Put initial y final node on the map
+start = (4, 0)
+goal = (3, 4)
 cell_map[start[0]][start[1]] = 2
 cell_map[goal[0]][goal[1]] = 3
 
@@ -40,18 +39,19 @@ if result:
 
 # Cell
 class Cell:
-    def __init__(self, x, y, value):
+    def __init__(self, grid, x, y, value):
         self.x = x
         self.y = y
         self.value = value
+        self.grid = grid
 
     def draw(self):
         top_left_x = x * CELL_SIZE
         top_left_y = y * CELL_SIZE
         bottom_rigt_x = top_left_x + CELL_SIZE
         bottom_rigt_y = top_left_y + CELL_SIZE
-        grid.create_rectangle(top_left_y, top_left_x, bottom_rigt_y,
-                              bottom_rigt_x, fill=colors[self.value], width=2)
+        self.grid.create_rectangle(top_left_y, top_left_x, bottom_rigt_y,
+                                   bottom_rigt_x, fill=colors[self.value], width=2)
 
 
 # Creates the main window
@@ -81,11 +81,16 @@ simulation_button.pack(side=LEFT)
 grid = Canvas(main_window, width=GRID_SIZE, height=GRID_SIZE)
 grid.pack()
 
+# Prints the grid
 for x in range(1, len(cell_map) + 1):
     for y in range(1, len(cell_map[0]) + 1):
         value = cell_map[x - 1][y - 1]
-        c = Cell(x, y, value)
+        c = Cell(grid, x, y, value)
         c.draw()
+
+# Creates error message
+if result is False:
+    messagebox.showerror("Title", 'No hay camino alcanzable')
 
 # Runs the main window
 main_window.mainloop()
