@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from a_star_algorithm import *
+import numpy as np
 
 # DefaultS sizeS
 CELL_SIZE = 60
@@ -15,23 +16,19 @@ colors = {
     4: 'orange',   # path
 }
 
-# Map
-cell_map = [
-    [1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 0],
-    [0, 1, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0],
-]
+# Read the matrix from the txt
+with open('matrix.txt', 'r') as f:
+    my_matrix = [[int(num) for num in line.split(',')] for line in f]
+    
 
-# Put initial y final node on the map
-start = (4, 0)
-goal = (3, 4)
-cell_map[start[0]][start[1]] = 2
-cell_map[goal[0]][goal[1]] = 3
+# Find initial and final node on the map
+cell_map = np.array(my_matrix)
+start = np.where(cell_map == 2)
+goal = np.where(cell_map == 3)
 
 # Put result on the map
-result = astar(cell_map, start, goal)
+result = astar(cell_map, (int(start[0]), int(start[1])), 
+                         (int(goal[0]), int(goal[1])))
 
 if result:
     for x, y in result[:-1]:
