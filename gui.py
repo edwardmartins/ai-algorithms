@@ -15,10 +15,6 @@ colors = {
     4: 'orange',   # path
 }
 
-matrix_file = open('matrix.txt')
-content = matrix_file.readlines()
-print(content)
-
 # Map
 cell_map = [
     [1, 0, 0, 0, 0, 0],
