@@ -19,19 +19,25 @@ colors = {
 # Read the matrix from the txt
 with open('matrix.txt', 'r') as f:
     my_matrix = [[int(num) for num in line.split(',')] for line in f]
-    
+
 # Find initial and final node on the map
 cell_map = np.array(my_matrix)
 start = np.where(cell_map == 2)
 goal = np.where(cell_map == 3)
 
-# Put result on the map
-result = ast.astar(cell_map, (int(start[0]), int(start[1])), 
-                         (int(goal[0]), int(goal[1])))
+# Calls a star algorithm if there is an start and a goal
+if len(start[0]) > 0 and len(goal[0] > 0):
+    result = ast.astar(cell_map, (int(start[0]), int(start[1])),
+                                 (int(goal[0]), int(goal[1])))
+else: 
+    result = False
 
+# Puts results on the map
 if result:
     for x, y in result[:-1]:
         cell_map[x][y] = 4
+else:
+    msg = 'Camino inalcanzable'
 
 # Cell
 class Cell:
@@ -86,7 +92,7 @@ for x in range(1, len(cell_map) + 1):
 
 # Creates error message
 if result is False:
-    messagebox.showerror("Title", 'No hay camino alcanzable')
+    messagebox.showerror("Title", msg)
 
 # Runs the main window
 main_window.mainloop()
