@@ -37,7 +37,7 @@ if result:
     for x, y in result[:-1]:
         cell_map[x][y] = 4
 else:
-    msg = 'Camino inalcanzable'
+    msg = 'Unreachable Path'
 
 # Cell
 class Cell:

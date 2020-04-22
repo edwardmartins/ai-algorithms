@@ -1,10 +1,8 @@
 from math import sqrt
 from heapq import heappush, heappop
 
-
 def heuristic(x, y):
     return sqrt((x[0]-y[0])**2 + (x[1]-y[1])**2)
-
 
 def get_path(current, came_from):
     data = []
@@ -12,7 +10,6 @@ def get_path(current, came_from):
         data.append(current)
         current = came_from[current]
     return data[::-1]
-
 
 def astar(nmap, start, goal):
     neighbors = [(0, 1), (0, -1), (1, 0), (-1, 0),
