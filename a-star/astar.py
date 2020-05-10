@@ -63,4 +63,3 @@ def astar(nmap, start, goal):
                 f_value[neighbor] = temporal_g + heuristic(neighbor, goal)
                 heappush(open_list, (f_value[neighbor], neighbor))
     return False
-
