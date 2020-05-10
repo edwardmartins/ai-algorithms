@@ -6,18 +6,30 @@ def calculate_entropy(attribute, data):
 
 
 def read_data():
-    with open('Juego.txt', 'r') as f:
-        data = [[str(word) for word in line.split(',')[:-1]] for line in f]
-        return np.array(data[:-1]) # skip last new line
+    with open('data.txt', 'r') as f:
+        data = np.loadtxt('data.txt', dtype=str ,delimiter =',')
+        return data
+
+def read_attributes():
+    with open('attributes.txt', 'r') as f:
+        attr = np.loadtxt('attributes.txt', dtype=str ,delimiter =',')
+        return attr
 
 
 def find_unique_vals(data, col):
     return np.unique(data[:,col]) # row,column
 
 #def id3(attributes, values):
-
+# Sacar los atributos unicos por cada columna, menos de la columna final
+# Por cada atributo unico sacar el numero de veces que se repite, el numero de (+) y el numero de (-)
 
 data = read_data()
 print(data)
+print(read_attributes())
+print(np.shape(data)[1]) # number of columns
 
-print(find_unique_vals(data,0))
+for i in range(np.shape(data)[1]): # for each column
+    print(find_unique_vals(data,i)) # print unique values
+
+print(np.sum(data == 'caluroso'))
+
