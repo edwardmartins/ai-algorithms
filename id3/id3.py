@@ -1,9 +1,11 @@
 import numpy as np
 from scipy.stats import entropy
 
-def calculate_entropy(attribute, data):
-    print((1/3)*entropy([1,0], base=2)+(2/3)*entropy([1/2,1/2], base=2))
-
+def calculate_entropy(data,col):
+    labels, counts = class_counts(data,col)
+    probs = counts/ float(np.shape(data)[0]) # number of rows
+    entropy = - np.sum(probs * np.log2(probs))
+    return entropy
 
 def read_data():
     with open('data.txt', 'r') as f:
@@ -15,21 +17,29 @@ def read_attributes():
         attr = np.loadtxt('attributes.txt', dtype=str ,delimiter =',')
         return attr
 
-
 def find_unique_vals(data, col):
     return np.unique(data[:,col]) # row,column
 
-#def id3(attributes, values):
-# Sacar los atributos unicos por cada columna, menos de la columna final
-# Por cada atributo unico sacar el numero de veces que se repite, el numero de (+) y el numero de (-)
+def class_counts(df,col):
+    return np.unique(df[:,col], return_counts=True)
+
+# def id3(attributes, values):
+
 
 data = read_data()
 print(data)
 print(read_attributes())
+print(calculate_entropy(data,-1))
+
+
+"""
 print(np.shape(data)[1]) # number of columns
+labels, counts = class_counts(data, -1)
+print(labels)
+print(counts/np.shape(data)[0]) # number of rows
 
 for i in range(np.shape(data)[1]): # for each column
     print(find_unique_vals(data,i)) # print unique values
 
 print(np.sum(data == 'caluroso'))
-
+"""
