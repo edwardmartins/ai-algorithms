@@ -20,6 +20,15 @@ def get_frequency(attribue_data):
     values, frequencies = np.unique(attribue_data, return_counts=True)
     return values, frequencies
 
+# returns the corresponding attribute from an example in the table
+def data_attribute_link(data, attributes):
+    value_attr = {}
+    for col in range(len(data[0])):
+        unique_values = np.unique(data[:,col])
+        for uv in unique_values:
+            value_attr[uv] = attributes[col] 
+    return value_attr
+
 # gets the entropy of the entire dataset
 def get_dataset_entropy(data):
     labels, counts = get_frequency(data[:,-1])
@@ -27,6 +36,7 @@ def get_dataset_entropy(data):
     entropy =- np.sum(probs * np.log2(probs))
     return entropy
 
+# gets the entropy of an attribute
 def get_attribute_entropy(data,col):
     labels, counts = get_frequency(data[:,col]) # label of each example
     ri = counts / float(np.shape(data)[0]) # frequency of each example
@@ -64,8 +74,8 @@ def get_attribute_entropy(data,col):
 
 # def id3(attributes, values):
 data = read_data()
-print(read_attributes())
-print(data)
+attr = read_attributes()
+print(data_attribute_link(data,attr))
 print(get_attribute_entropy(data,0))
 print(get_attribute_entropy(data,1))
 print(get_attribute_entropy(data,2))
