@@ -1,71 +1,73 @@
 import numpy as np
 from scipy.stats import entropy
 
+# constants
+NEGATIVE = 'no'
+POSITIVE = 'si'
 
-def calculate_entropy_dataset(data):
-    labels, counts = class_counts(data, -1)
+# reads attributes
+def read_attributes():
+    attr = np.loadtxt('attributes.txt', dtype=str, delimiter=',')
+    return attr
+
+# reads data
+def read_data():
+    data = np.loadtxt('data.txt', dtype=str, delimiter=',')
+    return data
+
+# returns the frequency of the values in a column
+def get_frequency(attribue_data):
+    values, frequencies = np.unique(attribue_data, return_counts=True)
+    return values, frequencies
+
+# gets the entropy of the entire dataset
+def get_dataset_entropy(data):
+    labels, counts = get_frequency(data[:,-1])
     probs = counts / float(np.shape(data)[0])
-    entropy = - np.sum(probs * np.log2(probs))
+    entropy =- np.sum(probs * np.log2(probs))
     return entropy
 
+def get_attribute_entropy(data,col):
+    labels, counts = get_frequency(data[:,col]) # label of each example
+    ri = counts / float(np.shape(data)[0]) # frequency of each example
+    print(labels)
+    print(ri)
 
-"""
-def calculate_entropy_attribute(data,col):
-    target_variables = find_unique_vals(data, -1)
-    variables, counts = class_counts(data,col) # number of times each example appears
-    probs = counts/ float(np.shape(data)[0]) # probability of appareance of each example
+    dic = {} # create a dictionary with {label,[ri,pi,ni]}
+    count  = 0
 
-    for var in variables: # para cada ejemplo
-        entropy = 0
-        for target in target_variables:
-            numerator = 
+    # for each label
+    for label in labels:
+        labels_target = data[data[:,col] == label][:,-1] # take the positives and negatives of a label
+        fr_target = get_frequency(labels_target)
+        pi,ni = 0,0
 
-"""
+        # cuando hay solo un si o solo un no
+        if(len(fr_target[0]) > 1):
+            ni = fr_target[1][0]/len(labels_target) # negative frequency
+            pi = fr_target[1][1]/len(labels_target) # positive frequency
+        else:
+            if fr_target[0] == POSITIVE:
+                pi = fr_target[1][0]/len(labels_target) 
+            else:
+                ni = fr_target[1][0]/len(labels_target) 
 
+        dic[label] = [ri[count],pi,ni]
+        count+=1
 
-def read_data():
-    with open('data.txt', 'r') as f:
-        data = np.loadtxt('data.txt', dtype=str, delimiter=',')
-        return data
+    total = 0
+    for value in dic.values():
+        total += value[0] * entropy([value[1],value[2]], base=2)
 
+    print(total)
 
-def read_attributes():
-    with open('attributes.txt', 'r') as f:
-        attr = np.loadtxt('attributes.txt', dtype=str, delimiter=',')
-        return attr
-
-
-def find_unique_vals(data, col):
-    return np.unique(data[:, col])  # row,column
-
-
-def class_counts(data, col):
-    return np.unique(data[:, col], return_counts=True)
-
-
-def get_classes(data, col, value):
-    return data[data[:,col] == value][:,-1]
 
 # def id3(attributes, values):
-
-
 data = read_data()
-print(data)
 print(read_attributes())
-print(calculate_entropy_dataset(data))
-print(get_classes(data,0,'lluvioso'))
-print(np.unique(get_classes(data,0,'lluvioso'), return_counts=True))
+print(data)
+print(get_attribute_entropy(data,0))
+print(get_attribute_entropy(data,1))
+print(get_attribute_entropy(data,2))
+print(get_attribute_entropy(data,3))
 
-
-
-"""
-print(np.shape(data)[1]) # number of columns
-labels, counts = class_counts(data, -1)
-print(labels)
-print(counts/np.shape(data)[0]) # number of rows
-
-for i in range(np.shape(data)[1]): # for each column
-    print(find_unique_vals(data,i)) # print unique values
-
-print(np.sum(data == 'caluroso'))
-"""
