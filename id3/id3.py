@@ -79,7 +79,7 @@ def build_tree(data,tree=None):
     # create an empty dictionary to create tree    
     if tree is None:                    
         tree={}
-        tree[attribute] = {}
+        tree[attribute] = {} 
     
     for value in att_values:
         
