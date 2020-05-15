@@ -86,7 +86,7 @@ def build_tree(data,tree=None):
         subtable = get_subtable(data,attribute,value)
         class_value,counts = np.unique(subtable[Class],return_counts=True)                        
         
-        if len(counts)==1: # checking purity of subset
+        if len(counts) == 1: # checking purity of subset
             tree[attribute][value] = class_value[0]                                                    
         else:        
             tree[attribute][value] = build_tree(subtable) # calling the function recursively 
