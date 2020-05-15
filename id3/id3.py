@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pprint
 from scipy.stats import entropy
 
 # constants
@@ -41,11 +42,10 @@ def get_attribute_entropy(data,attribute):
         fr_target = get_frequency(labels_target)
         pi,ni = 0,0
 
-        # there are yes and no labels
         if(len(fr_target[0]) > 1):
             ni = fr_target[1][0]/len(labels_target) # negative frequency
             pi = fr_target[1][1]/len(labels_target) # positive frequency
-        else:
+        else: # there is just one label
             if fr_target[0] == POSITIVE:
                 pi = fr_target[1][0]/len(labels_target) 
             else:
@@ -59,34 +59,39 @@ def get_attribute_entropy(data,attribute):
         ent += value[0] * entropy([value[1],value[2]], base=2)
     return ent 
 
-def get_subtable(data,col,label):
-    return data[data[:,col] == label][:,1:]
+# gets a subtable of a particular label
+def get_subtable(data,attribute,label):
+    return data[data[attribute] == label].reset_index(drop=True)
 
-# check if all values are positive or negative
-def check_all_equal(subtable):
-    if data[-1][data[-1] == POSITIVE]:
-        return POSITIVE
-    else:
-        return NEGATIVE
+# finds the winner attribute, maximize information
+def find_winner(data):
+    entropies = []
+    for attribute in data.keys()[:-1]:
+        entropies.append(get_attribute_entropy(data,attribute))
+    return data.keys()[:-1][np.argmin(entropies)]
 
+# builds decision tree
+def build_tree(data,tree=None): 
+    Class = data.keys()[-1]   
+    attribute = find_winner(data)
+    att_values = np.unique(data[attribute])
+    
+    # create an empty dictionary to create tree    
+    if tree is None:                    
+        tree={}
+        tree[attribute] = {}
+    
+    for value in att_values:
+        
+        subtable = get_subtable(data,attribute,value)
+        class_value,counts = np.unique(subtable[Class],return_counts=True)                        
+        
+        if len(counts)==1: # checking purity of subset
+            tree[attribute][value] = class_value[0]                                                    
+        else:        
+            tree[attribute][value] = build_tree(subtable) # calling the function recursively 
+                   
+    return tree
 
-# def id3(attributes, values):
-data = read_data()
-attr = read_attributes()
-
-print(data)
-print(get_dataset_entropy(data))
-entropies ={attribute: get_attribute_entropy(data,attribute) for attribute in data.keys()[:-1]} 
-print(entropies)
-
-"""
-print(np.argmin([ent[1] for ent in entropies]))
-print(min(entropies,key=lambda x:x[1]))
-
-
-print(get_attribute_entropy(data,0,'TiempoExterior'))
-print(get_attribute_entropy(data,1,'Temperatura'))
-print(get_attribute_entropy(data,2,'Humedad'))
-print(get_attribute_entropy(data,3,'Viento'))
-"""
-
+tree = build_tree(read_data())
+pprint.pprint(tree)
