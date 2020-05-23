@@ -46,7 +46,7 @@ def get_attribute_entropy(data,attribute):
             ni = fr_target[1][0]/len(labels_target) # negative frequency
             pi = fr_target[1][1]/len(labels_target) # positive frequency
         else: # there is just one label
-            if fr_target[0] == POSITIVE:
+            if str(fr_target[0]).lower() == POSITIVE:
                 pi = fr_target[1][0]/len(labels_target) 
             else:
                 ni = fr_target[1][0]/len(labels_target) 
