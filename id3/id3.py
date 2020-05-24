@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-import pprint
 from scipy.stats import entropy
+import pprint
 
 # constants
 NEGATIVE = 'no'
@@ -17,17 +17,10 @@ def read_data():
     data = pd.read_csv('data.txt', sep=',', names=read_attributes())
     return data
 
-# returns the frequency of the values in a column
+# returns the frequency of unique values in a column
 def get_frequency(attribue_data):
     values, frequencies = np.unique(attribue_data, return_counts=True)
     return values, frequencies
-
-# gets the entropy of the entire dataset
-def get_dataset_entropy(data):
-    labels, counts = get_frequency(data.iloc[:,-1])
-    probs = counts / float(np.shape(data)[0])
-    entropy =- np.sum(probs * np.log2(probs))
-    return entropy
 
 # gets the entropy of an attribute
 def get_attribute_entropy(data,attribute):
@@ -59,16 +52,16 @@ def get_attribute_entropy(data,attribute):
         ent += value[0] * entropy([value[1],value[2]], base=2)
     return ent 
 
-# gets a subtable of a particular label
-def get_subtable(data,attribute,label):
-    return data[data[attribute] == label].reset_index(drop=True)
-
 # finds the winner attribute, maximize information
 def find_winner(data):
     entropies = []
     for attribute in data.keys()[:-1]:
         entropies.append(get_attribute_entropy(data,attribute))
     return data.keys()[:-1][np.argmin(entropies)]
+
+# gets a subtable of a particular label
+def get_subtable(data,attribute,label):
+    return data[data[attribute] == label].reset_index(drop=True)
 
 # builds decision tree
 def build_tree(data,tree=None): 
@@ -92,6 +85,3 @@ def build_tree(data,tree=None):
             tree[attribute][value] = build_tree(subtable) # calling the function recursively 
                    
     return tree
-
-tree = build_tree(read_data())
-pprint.pprint(tree)
