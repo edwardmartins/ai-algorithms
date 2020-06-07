@@ -7,11 +7,11 @@ def menu():
 
     title = separator() + '\nID3 - Algorithm\n' + separator()
     print(title)
-    print('1) Mostrar tabla')
-    print('2) Aplicar algoritmo')
-    print('3) Salir de la aplicacion')
+    print('1) Show the data')
+    print('2) Apply ID3')
+    print('3) Exit')
     separator()
-    return int(input("Por favor introduce una opcion: "))
+    return int(input("Please choose an option: "))
   
 
 def main():
@@ -23,14 +23,15 @@ def main():
             print(separator())
             print(table)
             print(separator())
-            input("Presiona enter para continuar...")
+            input("Press enter to continue...")
         elif option == 2:
             tree = build_tree(table)
             print(separator())
             pprint.pprint(tree)
             print(separator())
-            input("Presiona enter para continuar...")
+            input("Press enter to continue...")
         option = menu()
 
 
-main()
+if __name__ == "__main__":
+    main()
