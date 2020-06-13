@@ -50,7 +50,6 @@ pycodestyle==2.5.0
 pydot==1.4.1
 PyGetWindow==0.0.8
 Pygments==2.6.1
-pyinstaller==4.0.dev0+03d42a2a25
 PyMsgBox==1.0.7
 pyparsing==2.4.7
 PyPDF2==1.26.0
