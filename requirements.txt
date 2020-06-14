@@ -61,8 +61,6 @@ python-dateutil==2.8.1
 python-docx==0.8.10
 PyTweening==1.0.3
 pytz==2020.1
-pywin32==227
-pywin32-ctypes==0.2.0
 pywinpty==0.5.7
 pyzmail36==1.0.4
 pyzmq==19.0.1
