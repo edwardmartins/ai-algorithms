@@ -17,4 +17,6 @@ In decision tree learning, ID3 is an algorithm used to generate a decision tree 
 ## K-Means 
 K-Means is one of the simplest unsupervised learning algorithms that solves the clustering problem. It groups all the objects in such a way that objects in the same group (group is a cluster) are more similar (in some sense) to each other than to those in other groups
 
+![image](https://user-images.githubusercontent.com/36489953/84597715-2b070900-ae66-11ea-8157-e2cd2916d0e8.png)
+
 
