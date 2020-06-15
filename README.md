@@ -19,4 +19,7 @@ K-Means is one of the simplest unsupervised learning algorithms that solves the 
 
 ![image](https://user-images.githubusercontent.com/36489953/84597715-2b070900-ae66-11ea-8157-e2cd2916d0e8.png)
 
+## Bayes
+In machine learning, naïve Bayes classifiers are a family of simple "probabilistic classifiers" based on applying Bayes theorem with strong (naïve) independence assumptions between the features
 
+![image](https://user-images.githubusercontent.com/36489953/84654277-2cd8d700-af0f-11ea-8e7c-ba620cc030a4.png)
